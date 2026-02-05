@@ -44,7 +44,11 @@
                         </div>
                         
                         <div class="portfolio-excerpt">
-                            <?php echo wp_trim_words(get_the_content(), 30); ?>
+                            <?php 
+                            $content = get_the_content();
+                            $clean_content = portfolio_strip_markdown($content);
+                            echo wp_trim_words($clean_content, 30); 
+                            ?>
                         </div>
                         
                         <a href="<?php the_permalink(); ?>" class="read-more">Read more →</a>

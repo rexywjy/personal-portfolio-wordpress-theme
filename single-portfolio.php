@@ -78,13 +78,13 @@ function toggleEditForm() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    if (typeof marked !== 'undefined') {
-        const content = document.getElementById('portfolioContent');
-        const rawContent = content.textContent.trim();
-        
-        if (rawContent && !content.querySelector('p') && !content.querySelector('h1')) {
-            content.innerHTML = marked.parse(rawContent);
-        }
+    const content = document.getElementById('portfolioContent');
+    const rawContent = content.getAttribute('data-raw-content');
+    
+    if (typeof marked !== 'undefined' && rawContent) {
+        content.innerHTML = marked.parse(rawContent);
+    } else if (rawContent) {
+        content.innerHTML = '<p>' + rawContent.replace(/\n\n/g, '</p><p>').replace(/\n/g, '<br>') + '</p>';
     }
 });
 </script>

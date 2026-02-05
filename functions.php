@@ -177,6 +177,21 @@ function portfolio_handle_delete_post() {
 }
 add_action('admin_post_portfolio_delete_post', 'portfolio_handle_delete_post');
 
-function portfolio_parse_markdown($content) {
-    return '<div class="markdown-content">' . wpautop($content) . '</div>';
+function portfolio_strip_markdown($text) {
+    $text = preg_replace('/^#{1,6}\s+/m', '', $text);
+    $text = preg_replace('/\*\*(.+?)\*\*/', '$1', $text);
+    $text = preg_replace('/\*(.+?)\*/', '$1', $text);
+    $text = preg_replace('/__(.+?)__/', '$1', $text);
+    $text = preg_replace('/_(.+?)_/', '$1', $text);
+    $text = preg_replace('/~~(.+?)~~/', '$1', $text);
+    $text = preg_replace('/`(.+?)`/', '$1', $text);
+    $text = preg_replace('/\[(.+?)\]\(.+?\)/', '$1', $text);
+    $text = preg_replace('/!\[.+?\]\(.+?\)/', '', $text);
+    $text = preg_replace('/^[\*\-\+]\s+/m', '', $text);
+    $text = preg_replace('/^\d+\.\s+/m', '', $text);
+    $text = preg_replace('/^>\s+/m', '', $text);
+    $text = preg_replace('/```[\s\S]*?```/', '', $text);
+    $text = preg_replace('/---+/', '', $text);
+    
+    return trim($text);
 }
