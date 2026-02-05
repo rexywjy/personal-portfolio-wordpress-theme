@@ -21,8 +21,8 @@
                         <?php the_post_thumbnail('large'); ?>
                     <?php endif; ?>
                     
-                    <div class="portfolio-body" id="portfolioContent">
-                        <?php the_content(); ?>
+                    <div class="portfolio-body" id="portfolioContent" data-raw-content="<?php echo esc_attr(get_the_content()); ?>">
+                        <div class="markdown-loading">Loading content...</div>
                     </div>
                     
                     <?php if (is_user_logged_in() && current_user_can('edit_posts')): ?>
